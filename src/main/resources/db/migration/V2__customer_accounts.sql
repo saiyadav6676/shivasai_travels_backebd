@@ -1,0 +1,12 @@
+CREATE TABLE users (
+  id BIGINT PRIMARY KEY AUTO_INCREMENT,
+  full_name VARCHAR(120) NOT NULL,
+  email VARCHAR(180) NOT NULL UNIQUE,
+  phone VARCHAR(20) NOT NULL,
+  password_hash VARCHAR(100) NOT NULL,
+  role VARCHAR(20) NOT NULL DEFAULT 'CUSTOMER',
+  created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+ALTER TABLE bookings ADD COLUMN user_id BIGINT NULL;
+ALTER TABLE bookings ADD CONSTRAINT fk_booking_user FOREIGN KEY(user_id) REFERENCES users(id);
+CREATE INDEX ix_booking_user ON bookings(user_id, created_at);
